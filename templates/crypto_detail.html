@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <b>CryptoTracker</b>
+        <a href="/trading">Back</a>
+    </nav>
+    <div class="container detail">
+        <h1><img src="{{ coin.image }}" width="40"> {{ coin.name }}</h1>
+        <h3>Price: ${{ coin.current_price }}</h3>
+        <p>Market Cap: ${{ coin.market_cap }}</p>
+        <div class="chart">
+            <h4>7-Day Trend</h4>
+            <img src="data:image/png;base64,{{ coin.chart }}" style="width:100%; border:1px solid #ddd;">
+        </div>
+    </div>
+</body>
+</html>

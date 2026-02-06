@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Watchlist</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <b>CryptoTracker</b>
+        <div><a href="/trading">Market</a> <a href="/watchlist">Watchlist</a> <a href="/logout">Logout</a></div>
+    </nav>
+    <div class="container">
+        <h2>My Watchlist</h2>
+        <table>
+            <tr><th>Coin</th><th>Price</th><th>Action</th></tr>
+            {% for item in items %}
+            <tr id="row-{{ item.crypto_symbol }}">
+                <td>{{ item.name }} ({{ item.crypto_symbol|upper }})</td>
+                <td>${{ item.current_price }}</td>
+                <td><button onclick="rem('{{ item.crypto_symbol }}')" class="btn-sm btn-danger">Remove</button></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <script>
+        function rem(s) {
+            fetch('/remove_from_watchlist', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({symbol: s})
+            }).then(() => document.getElementById('row-'+s).remove());
+        }
+    </script>
+</body>
+</html>
